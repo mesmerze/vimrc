@@ -11,35 +11,42 @@ set rtp+=~/.vim/bundle/Vundle.vim " set the runtime path to include Vundle
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'        " plugin manager
 Plugin 'tpope/vim-fugitive'       " git integration
-Plugin 'jpo/vim-railscasts-theme' " railscasts theme
-Plugin 'joshdick/onedark.vim'     " color theme atom dark
-Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'airblade/vim-gitgutter'   " shows git diff changes to the left
 Plugin 'bling/vim-airline'        " nice status line
 Plugin 'rking/ag.vim'             " nice search
 Plugin 'tpope/vim-rails'          " rails plugin
 Plugin 'w0rp/ale'                 " Ale style checker
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'alvan/vim-closetag'
+Plugin 'scrooloose/nerdcommenter' " Don't remember
+Plugin 'alvan/vim-closetag'       " Autoclose HTML tags
+Plugin 'tpope/vim-surround'       " Wrap anything
+Plugin 'morhetz/gruvbox'
+Plugin 't9md/vim-ruby-xmpfilter'  " Vim integration of this: JoshCheek/seeing_is_believing
+Plugin 'metakirby5/codi.vim'      " The interactive scratchpad
 
 
-" Angular stuff
-Plugin 'leafgarland/typescript-vim'
-Plugin 'Shougo/vimproc.vim'
-Plugin 'quramy/tsuquyomi'
-
+"SHIT ZONE
+"==================================
+" js shit
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
+"" angular shit
+"Plugin 'leafgarland/typescript-vim'
+"Plugin 'Shougo/vimproc.vim'
+"Plugin 'quramy/tsuquyomi'
+""==================================
 
 call vundle#end()            " required by Vundle
 filetype plugin indent on    " required by Vundle
 runtime macros/matchit.vim " smart way to show matching closing element pressing % on { shows } and so on
 " VIM Settings
 syntax on
-set background=light
-colorscheme PaperColor
+set background=dark
+colorscheme gruvbox
+" colorscheme PaperColor
 highlight default link SignColumn LineNr
 
 set shell=/bin/sh
+"set shell=/usr/local/bin/fish
 set encoding=utf-8
 
 set lazyredraw
@@ -93,20 +100,23 @@ tnoremap <Esc> <C-\><C-n>
 inoremap jj <ESC>
 
 " closetag options
-let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.erb'
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.erb,*.js'
 let g:closetag_close_shortcut = '<leader>>'
 
 let g:ale_linters = {
 \   'html': [],
 \}
 
-" function! ClipboardYank()
-"     call system('xclip -i -selection clipboard', @@)
-"   endfunction
-"   function! ClipboardPaste()
-"       let @@ = system('xclip -o -selection clipboard')
-"     endfunction
-"
-"     vnoremap <silent> y y:call ClipboardYank()<cr>
-"     vnoremap <silent> d d:call ClipboardYank()<cr>
-"     nnoremap <silent> p :call ClipboardPaste()<cr>p
+"==================================================
+" Enable seeing-is-believing mappings only for Ruby
+let g:xmpfilter_cmd = "seeing_is_believing"
+autocmd FileType ruby nmap <buffer> <F4> <Plug>(seeing_is_believing-mark)
+autocmd FileType ruby xmap <buffer> <F4> <Plug>(seeing_is_believing-mark)
+autocmd FileType ruby imap <buffer> <F4> <Plug>(seeing_is_believing-mark)
+autocmd FileType ruby nmap <buffer> <F6> <Plug>(seeing_is_believing-clean)
+autocmd FileType ruby xmap <buffer> <F6> <Plug>(seeing_is_believing-clean)
+autocmd FileType ruby imap <buffer> <F6> <Plug>(seeing_is_believing-clean)
+autocmd FileType ruby nmap <buffer> <F5> <Plug>(seeing_is_believing-run)
+autocmd FileType ruby xmap <buffer> <F5> <Plug>(seeing_is_believing-run)
+autocmd FileType ruby imap <buffer> <F5> <Plug>(seeing_is_believing-run)
+"==================================================
